@@ -11,10 +11,14 @@
 
   "content_scripts": [
     {
-      "matches": ["http://video.fc2.com/a/movie_search.php?*"],
+      "matches": [
+        "http://video.fc2.com/a/movie_search.php?*",
+        "http://video.fc2.com/movie_search.php?*",
+        "http://video.fc2.com/a/member.php?*"
+      ],
       "js": [
-        "jquery-1.11.1.min.js",
-        "better_search.js"
+        "lib/jquery-1.11.1.min.js",
+        "js/better_search.js"
       ],
       "run_at": "document_end"
     }]
