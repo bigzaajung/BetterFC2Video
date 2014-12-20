@@ -1,5 +1,8 @@
 (function(){
     console.log("better_search on");
+    // 設定をロード
+
+
     // 各ビデオ結果をループ
     $("#video_list_1column .video_list_renew").each(function(){
         // 動画ステータス取得
