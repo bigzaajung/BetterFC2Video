@@ -16,6 +16,8 @@
                     $(this).css({"color":"red","background":"pink"});
                 }else if(view > 5000){
                     $(this).css({"color":"orange","background":"khaki"});
+                }else if(view < 1000){
+                    $(this).css({"color":"black","background":"lightgray"});
                 }
             }
             else if($("img",this).hasClass("icon_albums")) {
@@ -25,6 +27,8 @@
                     $(this).css({"color":"red","background":"pink"});
                 }else if(album > 50){
                     $(this).css({"color":"orange","background":"khaki"});
+                }else if(album < 10){
+                    $(this).css({"color":"black","background":"lightgray"});
                 }
             }
         });
