@@ -14,12 +14,17 @@
       "matches": [
         "http://video.fc2.com/a/movie_search.php?*",
         "http://video.fc2.com/movie_search.php?*",
-        "http://video.fc2.com/a/member.php?*"
+        "http://video.fc2.com/a/member.php?*",
+        "http://video.fc2.com/a/recentpopular.php?*",
+        "http://video.fc2.com/a/member?*"
       ],
       "js": [
         "lib/jquery-1.11.1.min.js",
         "js/better_search.js"
       ],
-      "run_at": "document_end"
+      // JSの実行タイミング
+      "run_at": "document_end",
+      // option page
+      "options_page": "options.html"
     }]
 }
