@@ -15,10 +15,10 @@
     // 新着順の場合、時間分割ラベルを入れる
     var isOrderLatest = false;
     if ($("#sort_list-header option[selected]").first().html() == "新着"){
-        console.log("order latest");
         isOrderLatest = true;
     }
 
+    var nowday = '0';
     // 各ビデオ結果をループ
     $("#video_list_1column .video_list_renew").each(function(){
         // 動画ステータス取得
@@ -64,6 +64,26 @@
         // fc2 contents market を弱める
         if ($(".video_info_right .user_name a",this).html() == 'FC2コンテンツマーケット'){
             $(this).css("background","lightgray");
+        }
+
+        // 時間分割ラベルの挿入
+        if (isOrderLatest){
+            // サムネイルのdivにupidが入っている（URLの末尾のやつ）
+            var upid = $(".video_thumb_small[upid]").attr("upid");
+            if (typeof upid == "string") {
+                // 数値部分を抜き出す
+                var day = upid.substr(0, 8);
+                if (nowday != day){
+                    // TODO : 必ずupidが日付順に並んでいればよいが、データの並びは必ずしも正しくない
+                    // 日付の変わり目に、分割ラベルを挿入
+                    console.log(day);
+                    $(this).before(
+                        '<div style="border-bottom: 1px dotted #cdcdcd;margin: 15px 0;'+
+                        'background-color: lightblue;font-size: 16px;font-weight: bold;">'+
+                        day.substr(0,4)+'/'+day.substr(4,2)+'/'+day.substr(6,2)+'</div>');
+                    nowday = day;
+                }
+            }
         }
     });
 })();
