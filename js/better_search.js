@@ -1,16 +1,40 @@
-(function(){
-    console.log("better_search on");
-    // 設定をロード、設定されていなければデフォルト値
-    var TSD_TITLE_HIGH      = localStorage.getItem("input_threshold_title_high")    || 1.0;
-    var TSD_TITLE_MIDDLE    = localStorage.getItem("input_threshold_title_middle")  || 0.5;
-    var TSD_VIEW_HIGH       = localStorage.getItem("input_threshold_view_high")     || 10000;
-    var TSD_VIEW_MIDDLE     = localStorage.getItem("input_threshold_view_middle")   || 5000;
-    var TSD_VIEW_LOW        = localStorage.getItem("input_threshold_view_low")      || 1000;
-    var TSD_ALBUM_HIGH      = localStorage.getItem("input_threshold_album_high")    || 100;
-    var TSD_ALBUM_MIDDLE    = localStorage.getItem("input_threshold_album_middle")  || 50;
-    var TSD_ALBUM_LOW       = localStorage.getItem("input_threshold_album_low")     || 10;
+// chrome.storageのキーとデフォルト値のmap
+settings = {
+    input_threshold_title_high      : 1.0,
+    input_threshold_title_middle    : 0.5,
+    input_threshold_view_high       : 10000,
+    input_threshold_view_middle     : 5000,
+    input_threshold_view_low        : 1000,
+    input_threshold_album_high      : 100,
+    input_threshold_album_middle    : 50,
+    input_threshold_album_low       : 10
+};
 
-    // console.log(TSD_TITLE_HIGH);
+(function(){
+    // 設定読み込み
+    chrome.storage.sync.get(Object.keys(settings),
+        function(items){
+            console.log(items);
+            // 設定を適用
+            for (key in items){
+                if (key in settings){
+                    // 設定がsettingsに存在したら上書き
+                    settings[key] = parseFloat(items[key]);
+                }
+            }
+
+            console.log(settings);
+            // メイン処理呼び出し
+            bsmain();
+        }
+    );
+})();
+
+/**
+ * メイン処理、非同期の設定読み込みが行われてから実行する
+ */
+bsmain = function(){
+    console.log("better_search on");
 
     // 新着順の場合、時間分割ラベルを入れる
     var isOrderLatest = false;
@@ -31,22 +55,22 @@
                 //console.log($(this).html());
                 view = $(this).html().match(/[0-9]+$/)[0].replace(/\"/g,"");
                 // 検索数色付
-                if (view > TSD_VIEW_HIGH){
+                if (view > settings["input_threshold_view_high"]){
                     $(this).css({"color":"red","background":"pink"});
-                } else if (view > TSD_VIEW_MIDDLE){
+                } else if (view > settings["input_threshold_view_middle"]){
                     $(this).css({"color":"orange","background":"khaki"});
-                } else if (view < TSD_VIEW_LOW){
+                } else if (view < settings["input_threshold_view_low"]){
                     $(this).css({"color":"black","background":"lightgray"});
                 }
             }
             else if ($("img",this).hasClass("icon_albums")) {
                 album = $(this).html().match(/[0-9]+$/)[0].replace(/\"/g,"");
                 // アルバム数色付け
-                if (album > TSD_ALBUM_HIGH){
+                if (album > settings["input_threshold_album_high"]){
                     $(this).css({"color":"red","background":"pink"});
-                } else if (album > TSD_ALBUM_MIDDLE){
+                } else if (album > settings["input_threshold_album_middle"]){
                     $(this).css({"color":"orange","background":"khaki"});
-                } else if (album < TSD_ALBUM_LOW){
+                } else if (album < settings["input_threshold_album_low"]){
                     $(this).css({"color":"black","background":"lightgray"});
                 }
             }
@@ -54,10 +78,10 @@
         //console.log(album/view*100);
         // おすすめ度を計算
         rate = album/view*100;
-        if (rate > TSD_TITLE_HIGH){
+        if (rate > settings["input_threshold_title_high"]){
             // しきい値以上の登録率なら色を変える
             $(".video_info_right h3 a",this).css("color","red");
-        } else if (rate > TSD_TITLE_MIDDLE){
+        } else if (rate > settings["input_threshold_title_middle"]){
             $(".video_info_right h3 a",this).css("color","coral");
         }
 
@@ -85,4 +109,4 @@
             }
         }
     });
-})();
+};
