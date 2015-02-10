@@ -55,7 +55,7 @@
         // おすすめ度を計算
         rate = album/view*100;
         if (rate > TSD_TITLE_HIGH){
-            // しきい値以上の登録率なら
+            // しきい値以上の登録率なら色を変える
             $(".video_info_right h3 a",this).css("color","red");
         } else if (rate > TSD_TITLE_MIDDLE){
             $(".video_info_right h3 a",this).css("color","coral");
@@ -69,14 +69,13 @@
         // 時間分割ラベルの挿入
         if (isOrderLatest){
             // サムネイルのdivにupidが入っている（URLの末尾のやつ）
-            var upid = $(".video_thumb_small[upid]").attr("upid");
+            var upid = $(".video_thumb_small[upid]",this).attr("upid");
             if (typeof upid == "string") {
                 // 数値部分を抜き出す
                 var day = upid.substr(0, 8);
                 if (nowday != day){
                     // TODO : 必ずupidが日付順に並んでいればよいが、データの並びは必ずしも正しくない
                     // 日付の変わり目に、分割ラベルを挿入
-                    console.log(day);
                     $(this).before(
                         '<div style="border-bottom: 1px dotted #cdcdcd;margin: 15px 0;'+
                         'background-color: lightblue;font-size: 16px;font-weight: bold;">'+
