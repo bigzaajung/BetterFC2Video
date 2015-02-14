@@ -14,7 +14,7 @@ settings = {
     // 設定読み込み
     chrome.storage.sync.get(Object.keys(settings),
         function(items){
-            console.log(items);
+            //console.log(items);
             // 設定を適用
             for (key in items){
                 if (key in settings){
@@ -23,7 +23,7 @@ settings = {
                 }
             }
 
-            console.log(settings);
+            //console.log(settings);
             // メイン処理呼び出し
             bsmain();
         }
@@ -34,7 +34,7 @@ settings = {
  * メイン処理、非同期の設定読み込みが行われてから実行する
  */
 bsmain = function(){
-    console.log("better_search on");
+    //console.log("better_search on");
 
     // 新着順の場合、時間分割ラベルを入れる
     var isOrderLatest = false;
