@@ -13,7 +13,7 @@
     });
     // 非同期の読み込み
     chrome.storage.sync.get(vals,function(items) {
-        console.log(items);
+        //console.log(items);
         $("input").each(function () {
             $(this).val(items[$(this).attr("id")]);
             $(this).next().html(items[$(this).attr("id")]);
@@ -22,13 +22,13 @@
 
     // 適用ボタン押下時の動作
     $("#button_confirm").on("click",function(){
-        console.log("confirm");
+        //console.log("confirm");
         // keyvalueの配列を作る
         var setvals = {};
         $(".Setting_item input").each(function(){
             setvals[$(this).attr("id")] = $(this).val();
         });
-        console.log(setvals);
+        //console.log(setvals);
 
         // chromeのstorageへ保存
         chrome.storage.sync.set(setvals,function(){
